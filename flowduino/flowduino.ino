@@ -56,7 +56,8 @@ void useInterrupt(boolean v) {
 }
 
 void setup() {
-  // put your setup code here, to run once:
+   Serial.begin(9600);
+   // put your setup code here, to run once:
    pinMode(FLOWSENSORPIN, INPUT);
    digitalWrite(FLOWSENSORPIN, HIGH);
    lastflowpinstate = digitalRead(FLOWSENSORPIN);
@@ -64,6 +65,7 @@ void setup() {
    
    strip.begin();
    strip.show();
+   Serial.print("Setup Complete");
 }
 
 //Update the color of all the pixels
@@ -75,6 +77,9 @@ void changeColor(uint32_t c) {
 }
 
 void setLeds(int num) {
+  Serial.print("Set LEDs");
+  Serial.print(num);
+  Serial.println();
   uint32_t color = strip.Color(127, 127, 127);
   for(int i=0; i<num; i++) {
       strip.setPixelColor(i, color);

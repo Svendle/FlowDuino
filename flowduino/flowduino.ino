@@ -80,12 +80,14 @@ void setLeds(int num) {
 //  Serial.print("Set LEDs");
 //  Serial.print(num);
 //  Serial.println();
+  if (num == 6)
+    num = 5;
   uint32_t color = strip.Color(127, 127, 127);
-  for(int i=0; i<num; i++) {
+  for(int i=strip.numPixels()-num; i<strip.numPixels(); i++) {
       strip.setPixelColor(i, color);
       strip.show();
   }
-  for(uint16_t i=num; i<strip.numPixels(); i++) {
+  for(uint16_t i=0; i<strip.numPixels()-num; i++) {
       strip.setPixelColor(i, 0);
       strip.show();
   }
@@ -106,7 +108,7 @@ void loop() {
   //end of stuff I don't understand
   delay(100);
   
-  float percent = 1 - (liters/2.4);
+  float percent = 1 - (liters/0.2);
 
   int numLeds = (int)(percent * 5) + 1;
   if (percent < 0.025) {

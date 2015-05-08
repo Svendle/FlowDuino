@@ -2,7 +2,7 @@
 #include <avr/power.h>
 
 #define FLOWSENSORPIN 2
-#define PIN 3
+#define NEOPIXELPIN 3
 
 
 // Parameter 1 = number of pixels in strip
@@ -12,7 +12,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, NEOPIXELPIN, NEO_GRB + NEO_KHZ800);
 
 
 // count how many pulses!
@@ -77,9 +77,9 @@ void changeColor(uint32_t c) {
 }
 
 void setLeds(int num) {
-  Serial.print("Set LEDs");
-  Serial.print(num);
-  Serial.println();
+//  Serial.print("Set LEDs");
+//  Serial.print(num);
+//  Serial.println();
   uint32_t color = strip.Color(127, 127, 127);
   for(int i=0; i<num; i++) {
       strip.setPixelColor(i, color);
@@ -95,12 +95,18 @@ void loop() {
   // put your main code here, to run repeatedly:
   //I don't understand this part defining the liters
   float liters = pulses;
+  Serial.print("pulses");
+  Serial.print(liters);
+  Serial.println();
   liters /= 7.5;
   liters /= 60.0;
+  Serial.print("liters");
+  Serial.print(liters);
+  Serial.println();
   //end of stuff I don't understand
   delay(100);
   
-  float percent = 1 - (liters/2.0);
+  float percent = 1 - (liters/2.4);
 
   int numLeds = (int)(percent * 5) + 1;
   if (percent < 0.025) {
